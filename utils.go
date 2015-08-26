@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"io/ioutil"
+	"time"
 )
 
 var Utils = TwitterUtils{}
@@ -20,4 +21,10 @@ func (u TwitterUtils) Parse(r io.Reader, v interface{}) error {
 		return err
 	}
 	return err
+}
+
+func (u TwitterUtils) ConvertTimestamp(timestamp string) string {
+	var timeformat string = time.RubyDate
+	tm_timestamp, _ := time.Parse(timeformat, timestamp)
+	return tm_timestamp.In(time.FixedZone("Asia/Tokyo", 9*60*60)).Format("2006/01/02 15:04:05")
 }
