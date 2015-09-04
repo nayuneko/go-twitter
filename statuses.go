@@ -10,6 +10,7 @@ type Status struct {
 	InReplyUserIdStr   string         `json:"in_reply_to_user_id_str"`
 	Entities           Entity         `json:"entities"`
 	ExtendedEntities   ExtendedEntity `json:"extended_entities"`
+	QuotedStatus       *Status        `json:"quoted_status"`
 }
 
 type Entity struct {
@@ -20,6 +21,7 @@ type Entity struct {
 }
 
 type EntityUrl struct {
+	Url         string `json:"url"`
 	ExpandedUrl string `json:"expanded_url"`
 	DisplayUrl  string `json:"display_url"`
 	Indices     [2]int `json:"indices"`
