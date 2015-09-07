@@ -23,12 +23,8 @@ func (u TwitterUtils) Parse(r io.Reader, v interface{}) (string, error) {
 	return string(bits), err
 }
 
-func (u TwitterUtils) ConvertTimestamp(timestamp string) string {
+func (u TwitterUtils) ConvertTimestamp(in_timestamp string) (timestamp time.Time, timestampString string) {
 	var timeformat string = time.RubyDate
-	tm_timestamp, _ := time.Parse(timeformat, timestamp)
-	return tm_timestamp.In(time.FixedZone("Asia/Tokyo", 9*60*60)).Format("2006/01/02 15:04:05")
-}
-
-func (u TwitterUtils) ConvertText(status Status) string {
-	return status.Text
+	timestamp, _ = time.Parse(timeformat, in_timestamp)
+	return timestamp, timestamp.In(time.FixedZone("Asia/Tokyo", 9*60*60)).Format("2006/01/02 15:04:05")
 }
