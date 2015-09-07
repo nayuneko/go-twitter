@@ -10,8 +10,17 @@ type Twitter struct {
 	ConsumerSecret string
 	AccessToken    string
 	AccessSecret   string
+	RawBodyData    string
 }
 
+func NewTwitter(ConsumerKey, ConsumerSecret, AccessToken, AccessSecret string) *Twitter {
+	return &Twitter{
+		ConsumerKey:    ConsumerKey,
+		ConsumerSecret: ConsumerSecret,
+		AccessToken:    AccessToken,
+		AccessSecret:   AccessSecret,
+	}
+}
 func (twitter *Twitter) getConsumer() *oauth.Consumer {
 	consumer := oauth.NewConsumer(
 		twitter.ConsumerKey,
@@ -40,5 +49,6 @@ func (twitter *Twitter) get_parse(url string, userParams map[string]string, v in
 		return err
 	}
 	defer resp.Body.Close()
-	return Utils.Parse(resp.Body, v)
+	twitter.RawBodyData, err = Utils.Parse(resp.Body, v)
+	return err
 }

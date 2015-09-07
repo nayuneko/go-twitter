@@ -11,16 +11,16 @@ var Utils = TwitterUtils{}
 
 type TwitterUtils struct{}
 
-func (u TwitterUtils) Parse(r io.Reader, v interface{}) error {
+func (u TwitterUtils) Parse(r io.Reader, v interface{}) (string, error) {
 	bits, err := ioutil.ReadAll(r)
 	if err != nil {
-		return err
+		return "", err
 	}
 	err = json.Unmarshal(bits, &v)
 	if err != nil {
-		return err
+		return string(bits), err
 	}
-	return err
+	return string(bits), err
 }
 
 func (u TwitterUtils) ConvertTimestamp(timestamp string) string {
