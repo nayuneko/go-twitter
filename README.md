@@ -33,7 +33,7 @@ TwitterAPIアクセス用ラッパーライブラリ
         fmt.Println(err)
         os.Exit(1)
       }
-      for _, recieved_status := range lists {
-        fmt.Printf(recieved_status)
+      for _, received_status := range lists {
+        fmt.Printf(received_status)
       }
     }
