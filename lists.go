@@ -14,10 +14,10 @@ const (
 )
 
 func (twitter *Twitter) ListsStatuses(userParams map[string]string) (result []ReceivedStatus, err error) {
-	err = twitter.get_parse(URL_LISTS_STATUSES, userParams, &result)
+	err = twitter.get(URL_LISTS_STATUSES, userParams, &result)
 	return result, err
 }
 func (twitter *Twitter) ListsMembers(userParams map[string]string) (result ListMembers, err error) {
-	err = twitter.get_parse(URL_LISTS_MEMBERS, userParams, &result)
+	err = twitter.get(URL_LISTS_MEMBERS, userParams, &result)
 	return result, err
 }

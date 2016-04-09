@@ -1,6 +1,7 @@
 package twitter
 
 import (
+	"errors"
 	"github.com/mrjones/oauth"
 	"net/http"
 )
@@ -34,21 +35,36 @@ func (twitter *Twitter) getConsumer() *oauth.Consumer {
 	return consumer
 }
 
-func (twitter *Twitter) get(url string, userParams map[string]string) (resp *http.Response, err error) {
+const (
+	METHOD_GET  = "GET"
+	METHOD_POST = "POST"
+)
+
+func (twitter *Twitter) request(method string, url string, userParams map[string]string, v interface{}) error {
 	consumer := twitter.getConsumer()
 	token := &oauth.AccessToken{
 		Token:  twitter.AccessToken,
 		Secret: twitter.AccessSecret,
 	}
-	return consumer.Get(url, userParams, token)
-}
-
-func (twitter *Twitter) get_parse(url string, userParams map[string]string, v interface{}) error {
-	resp, err := twitter.get(url, userParams)
+	var err error = nil
+	var resp *http.Response = nil
+	if method == METHOD_GET {
+		resp, err = consumer.Get(url, userParams, token)
+	} else if method == METHOD_POST {
+		resp, err = consumer.Post(url, userParams, token)
+	} else {
+		return errors.New("Unknown method")
+	}
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
 	twitter.RawBodyData, err = Utils.Parse(resp.Body, v)
 	return err
+}
+func (twitter *Twitter) get(url string, userParams map[string]string, v interface{}) error {
+	return twitter.request(METHOD_GET, url, userParams, v)
+}
+func (twitter *Twitter) post(url string, userParams map[string]string, v interface{}) error {
+	return twitter.request(METHOD_POST, url, userParams, v)
 }

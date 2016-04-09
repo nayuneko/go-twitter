@@ -52,3 +52,10 @@ type ReceivedStatus struct {
 	Status
 	RetweetedStatus *Status `json:"retweeted_status"`
 }
+
+const URL_STATUSES_UPDATE = "https://api.twitter.com/1.1/statuses/update.json"
+
+func (twitter *Twitter) StatusesUpdate(userParams map[string]string) (result []ReceivedStatus, err error) {
+	err = twitter.post(URL_STATUSES_UPDATE, userParams, &result)
+	return result, err
+}
