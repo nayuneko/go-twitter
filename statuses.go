@@ -4,6 +4,7 @@ type Status struct {
 	CreatedAt          string         `json:"created_at"`
 	User               User           `json:"user"`
 	Text               string         `json:"text"`
+	FullText           *string        `json:"full_text"`
 	Id                 uint64         `json:"id"`
 	IdStr              string         `json:"id_str"`
 	InReplyStatusIdStr string         `json:"in_reply_to_status_id_str"`
@@ -11,6 +12,7 @@ type Status struct {
 	Entities           Entity         `json:"entities"`
 	ExtendedEntities   ExtendedEntity `json:"extended_entities"`
 	QuotedStatus       *Status        `json:"quoted_status"`
+	Truncated          *bool          `json:"truncated"`
 }
 
 type Entity struct {
@@ -45,7 +47,8 @@ type ExtendedEntity struct {
 }
 
 type TwitterMedia struct {
-	MediaUrl string `json:"media_url"`
+	MediaUrl      string `json:"media_url"`
+	MediaUrlHttps string `json:"media_url_https"`
 }
 
 type ReceivedStatus struct {
