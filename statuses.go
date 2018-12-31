@@ -47,7 +47,8 @@ type ExtendedEntity struct {
 }
 
 type TwitterMedia struct {
-	MediaURL string `json:"media_url"`
+	MediaURL      string `json:"media_url"`
+	MediaURLHttps string `json:"media_url_https"`
 }
 
 type ReceivedStatus struct {
