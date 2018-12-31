@@ -5,10 +5,10 @@ type Status struct {
 	User               User           `json:"user"`
 	Text               string         `json:"text"`
 	FullText           *string        `json:"full_text"`
-	Id                 uint64         `json:"id"`
-	IdStr              string         `json:"id_str"`
-	InReplyStatusIdStr string         `json:"in_reply_to_status_id_str"`
-	InReplyUserIdStr   string         `json:"in_reply_to_user_id_str"`
+	ID                 uint64         `json:"id"`
+	IDStr              string         `json:"id_str"`
+	InReplyStatusIDStr string         `json:"in_reply_to_status_id_str"`
+	InReplyUserIDStr   string         `json:"in_reply_to_user_id_str"`
 	Entities           Entity         `json:"entities"`
 	ExtendedEntities   ExtendedEntity `json:"extended_entities"`
 	QuotedStatus       *Status        `json:"quoted_status"`
@@ -16,16 +16,16 @@ type Status struct {
 }
 
 type Entity struct {
-	Urls         []EntityUrl         `json:"urls"`
+	Urls         []EntityURL         `json:"urls"`
 	Hashtags     []EntityHashtag     `json:"hashtags"`
 	UserMentions []EntiryUserMention `json:"user_mentions"`
-	Medias       []EntityUrl         `json:"media"`
+	Medias       []EntityURL         `json:"media"`
 }
 
-type EntityUrl struct {
-	Url         string `json:"url"`
-	ExpandedUrl string `json:"expanded_url"`
-	DisplayUrl  string `json:"display_url"`
+type EntityURL struct {
+	URL         string `json:"url"`
+	ExpandedURL string `json:"expanded_url"`
+	DisplayURL  string `json:"display_url"`
 	Indices     [2]int `json:"indices"`
 }
 
@@ -37,8 +37,8 @@ type EntityHashtag struct {
 type EntiryUserMention struct {
 	Name       string `json:"name"`
 	ScreenName string `json:"screen_name"`
-	Id         uint64 `json:"id"`
-	IdStr      string `json:"id_str"`
+	ID         uint64 `json:"id"`
+	IDStr      string `json:"id_str"`
 	Indices    [2]int `json:"indices"`
 }
 
@@ -47,8 +47,7 @@ type ExtendedEntity struct {
 }
 
 type TwitterMedia struct {
-	MediaUrl      string `json:"media_url"`
-	MediaUrlHttps string `json:"media_url_https"`
+	MediaURL string `json:"media_url"`
 }
 
 type ReceivedStatus struct {
@@ -56,9 +55,10 @@ type ReceivedStatus struct {
 	RetweetedStatus *Status `json:"retweeted_status"`
 }
 
-const URL_STATUSES_UPDATE = "https://api.twitter.com/1.1/statuses/update.json"
+const urlStatusesUpdate = "https://api.twitter.com/1.1/statuses/update.json"
 
-func (twitter *Twitter) StatusesUpdate(userParams map[string]string) (result []ReceivedStatus, err error) {
-	err = twitter.post(URL_STATUSES_UPDATE, userParams, &result)
+func (twitter *Twitter) StatusesUpdate(userParams map[string]string) ([]ReceivedStatus, error) {
+	var result []ReceivedStatus
+	err := twitter.post(urlStatusesUpdate, userParams, &result)
 	return result, err
 }
