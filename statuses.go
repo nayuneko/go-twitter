@@ -7,8 +7,10 @@ type Status struct {
 	FullText           *string        `json:"full_text"`
 	ID                 uint64         `json:"id"`
 	IDStr              string         `json:"id_str"`
-	InReplyStatusIDStr string         `json:"in_reply_to_status_id_str"`
-	InReplyUserIDStr   string         `json:"in_reply_to_user_id_str"`
+	InReplyStatusID    *uint64        `json:"in_reply_to_status_id"`
+	InReplyStatusIDStr *string        `json:"in_reply_to_status_id_str"`
+	InReplyUserID      *uint64        `json:"in_reply_to_user_id"`
+	InReplyUserIDStr   *string        `json:"in_reply_to_user_id_str"`
 	Entities           Entity         `json:"entities"`
 	ExtendedEntities   ExtendedEntity `json:"extended_entities"`
 	QuotedStatus       *Status        `json:"quoted_status"`
