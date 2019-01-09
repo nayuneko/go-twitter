@@ -8,19 +8,19 @@ TwitterAPIアクセス用ラッパーライブラリ
     package main
 
     import (
-      "bitbucket.org/nayuneko/go-twitter"
+      "github.com/nayuneko/go-twitter"
       "fmt"
       "os"
     )
 
     func main() {
-      twitterConfig := twitter.twitterConfig{
+      twitterConfig := twitter.Config{
         ConsumerKey:    "",
         ConsumerSecret: "",
         AccessToken:    "",
         AccessSecret:   "",
       }
-      twitterClient := twitter.NewTwitter(twitterConfig)
+      twitterClient := twitter.New(twitterConfig)
       // API options : https://dev.twitter.com/rest/reference/get/lists/statuses 
       opts := map[string]string{
         "list_id":     "1234567",
