@@ -20,7 +20,7 @@ type Status struct {
 type Entity struct {
 	Urls         []EntityURL         `json:"urls"`
 	Hashtags     []EntityHashtag     `json:"hashtags"`
-	UserMentions []EntiryUserMention `json:"user_mentions"`
+	UserMentions []EntityUserMention `json:"user_mentions"`
 	Medias       []EntityURL         `json:"media"`
 }
 
@@ -36,7 +36,7 @@ type EntityHashtag struct {
 	Indices [2]int `json:"indices"`
 }
 
-type EntiryUserMention struct {
+type EntityUserMention struct {
 	Name       string `json:"name"`
 	ScreenName string `json:"screen_name"`
 	ID         uint64 `json:"id"`
