@@ -8,9 +8,10 @@ TwitterAPIアクセス用ラッパーライブラリ
     package main
 
     import (
-      "github.com/nayuneko/go-twitter"
       "fmt"
       "os"
+
+      twitter "github.com/nayuneko/go-twitter"
     )
 
     func main() {
@@ -20,10 +21,10 @@ TwitterAPIアクセス用ラッパーライブラリ
         AccessToken:    "",
         AccessSecret:   "",
       }
-      twitterClient := twitter.New(twitterConfig)
-      // API options : https://dev.twitter.com/rest/reference/get/lists/statuses 
+      twitterClient := twitter.New(&twitterConfig)
+      // API options : https://dev.twitter.com/rest/reference/get/lists/statuses
       opts := map[string]string{
-        "list_id":     "1234567",
+        "list_id":     "",
         "include_rts": "true",
         "count":       "50",
       }
@@ -32,7 +33,7 @@ TwitterAPIアクセス用ラッパーライブラリ
         fmt.Println(err)
         os.Exit(1)
       }
-      for _, receivedStatus := range lists {
-        fmt.Printf(receivedStatus)
+      for _, rs := range lists {
+        fmt.Println(rs)
       }
     }

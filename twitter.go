@@ -2,8 +2,6 @@ package twitter
 
 import (
 	"encoding/json"
-	"io"
-	"io/ioutil"
 
 	"github.com/mrjones/oauth"
 )
@@ -17,11 +15,10 @@ type Config struct {
 }
 
 type Twitter struct {
-	config      Config
-	RawBodyData string
+	config *Config
 }
 
-func New(config Config) *Twitter {
+func New(config *Config) *Twitter {
 	return &Twitter{config: config}
 }
 
@@ -49,8 +46,7 @@ func (twitter *Twitter) get(url string, userParams map[string]string, v interfac
 		return err
 	}
 	defer resp.Body.Close()
-	twitter.RawBodyData, err = parse(resp.Body, v)
-	return err
+	return json.NewDecoder(resp.Body).Decode(v)
 }
 
 func (twitter *Twitter) post(url string, userParams map[string]string, v interface{}) error {
@@ -64,18 +60,5 @@ func (twitter *Twitter) post(url string, userParams map[string]string, v interfa
 		return err
 	}
 	defer resp.Body.Close()
-	twitter.RawBodyData, err = parse(resp.Body, v)
-	return err
-}
-
-func parse(r io.Reader, v interface{}) (string, error) {
-	bits, err := ioutil.ReadAll(r)
-	if err != nil {
-		return "", err
-	}
-	err = json.Unmarshal(bits, &v)
-	if err != nil {
-		return string(bits), err
-	}
-	return string(bits), err
+	return json.NewDecoder(resp.Body).Decode(v)
 }
